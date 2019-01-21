@@ -60,7 +60,7 @@ resolve: {
   }
 },
 ```
-## tsconfig.json
+## 在根目录添加 tsconfig.json文件
 [可参考官方推荐配置](https://cn.vuejs.org/v2/guide/typescript.html)
 ```js
 参考项
@@ -115,6 +115,15 @@ resolve: {
       "es2015.promise"
     ]
   }
+}
+```
+## 在根目录添加 tslint.json文件
+```js
+{
+    "extends": "tslint-config-standard",
+    "globals": {
+      "require": true
+    }
 }
 ```
 
