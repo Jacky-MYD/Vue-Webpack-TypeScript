@@ -60,3 +60,6 @@ resolve: {
   }
 },
 ```
+## tsconfig.json
+[可参考官方推荐配置](https://cn.vuejs.org/v2/guide/typescript.html)
+
