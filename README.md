@@ -31,15 +31,32 @@ npm i ts-loader typescript tslint tslint-loader tslint-config-standard --save-de
 ## 配置webpack
 修改配置文件webpack.base.conf.js，将入口main.js改成main.ts，并且将main.js文件的类名也改成main.ts
 ```js
-  // main.js改成main.ts
-  entry: {
-    app: './src/main.ts'
+// main.js改成main.ts
+entry: {
+  app: './src/main.ts'
+}
+// 新增.ts
+resolve: {
+  extensions: ['.js', '.vue', '.json', '.ts'],
+  alias: {
+    '@': resolve('src')
   }
-  // 新增.ts
-  resolve: {
-    extensions: ['.js', '.vue', '.json', '.ts'],
-    alias: {
-      '@': resolve('src')
-    }
+}
+```
+在module.rules 添加webpack对.ts的解析
+```js
+{
+  test: /\.ts$/,
+  exclude: /node_modules/,
+  enforce: 'pre',
+  loader: 'tslint-loader'
+},
+{
+  test: /\.tsx?$/,
+  loader: 'ts-loader',
+  exclude: /node_modules/,
+  options: {
+    appendTsSuffixTo: [/\.vue$/],
   }
+},
 ```
