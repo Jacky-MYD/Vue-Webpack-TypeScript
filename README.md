@@ -31,7 +31,15 @@ npm i ts-loader typescript tslint tslint-loader tslint-config-standard --save-de
 ## 配置webpack
 修改配置文件webpack.base.conf.js，将入口main.js改成main.ts，并且将main.js文件的类名也改成main.ts
 ```js
+  // main.js改成main.ts
   entry: {
     app: './src/main.ts'
+  }
+  // 新增.ts
+  resolve: {
+    extensions: ['.js', '.vue', '.json', '.ts'],
+    alias: {
+      '@': resolve('src')
+    }
   }
 ```
