@@ -5,6 +5,7 @@
 ## Build Setup
 
 ``` bash
+可以直接clone该脚手架，然后按照以下基本命令即可跑项目了
 # install dependencies
 npm install
 
