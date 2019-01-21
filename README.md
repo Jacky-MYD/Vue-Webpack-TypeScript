@@ -28,4 +28,10 @@ npm i ts-loader typescript tslint tslint-loader tslint-config-standard --save-de
 * ts-loader：TypeScript 为 Webpack 提供了 ts-loader，其实就是为了让webpack识别 .ts .tsx文件
 * tslint-loader跟tslint：我想你也会在.ts .tsx文件 约束代码格式（作用等同于eslint）
 * tslint-config-standard：tslint 配置 standard风格的约束
-
+## 配置webpack
+修改配置文件webpack.base.conf.js，将入口main.js改成main.ts，并且将main.js文件的类名也改成main.ts
+```js
+  entry: {
+    app: './src/main.ts'
+  }
+```
