@@ -135,4 +135,62 @@ declare module "*.vue" {
 }
 ```
 
+## vue文件用ts改造
+之前我们有安装vue-class-component插件，那么我们就直接在vue页面中引入该插件，这里我就直接上代码了，ts语法可看官方文档或者w3c的教程等。但是记得将script标签中加lang="ts"，表示引入ts语法
+```js
+<script lang="ts">
+  import Vue from 'vue'
+  import Component from 'vue-class-component'
+  import { postDemo, getDemo } from '../store/modules/demo/dispatches.ts'
+  import { State, Action, Getter, Mutation } from 'vuex-class'
+  
+  @Component
+  export default class App extends Vue {
+    // 初始化数据
+    msg = 'Jacky' // 这里相当于在data中声明一个msg: 'Jacky'的变量
+    @Getter author // 这里相当于 author: state => state.demo.author
+    @Getter helloWord // 这里相当于 helloWord: state => state.demo.helloWord
+    @Mutation SET_AUTHOR // vuex总体设置的变量
+    @Mutation SET_HELLO_WORD // 模块的vuex设置的变量
+    // 声明周期钩子
+    mounted () {
+      this.greet()
+    }
+    created() {
+      var curTime = new Date()
+      var y = curTime.getFullYear()
+      var m = (curTime.getMonth() + 1) > 9 ? (curTime.getMonth() + 1) : '0' + (curTime.getMonth() + 1)
+      var d = curTime.getDate() > 9 ? curTime.getDate() : '0' + curTime.getDate()
+      var hh = curTime.getHours() > 9 ? curTime.getHours() : '0' + curTime.getHours()
+      var mm = curTime.getMinutes() > 9 ? curTime.getMinutes() : '0' + curTime.getMinutes()
+      var ss = curTime.getSeconds() > 9 ? curTime.getSeconds() : '0' + curTime.getSeconds()
+      var firstTime = y + '-' + m + '-' + d + ' ' + hh + ':' + mm + ':' + ss
+      // post请求案例
+      postDemo({updateTime: firstTime}).then((res: any) => {
+        console.log('这是post请求返回的数据', res)
+      })
+      // get请求案例
+      getDemo('test').then((res: any) => {
+        console.log('这是get请求返回的数据', res)
+      })
+    }
+    // 计算属性相当于以前的computed
+    get computedMsg () {
+      return 'Vue + TypeScript'
+    }
+
+    // 这里的方法相当于以前在methods里面的方法
+    greet () {      
+      console.log('author: ', this.author + '\n' + 'helloWord: ' + this.helloWord)
+    }
+
+    // 点击事件
+    vuexDemo(val) {
+      this.SET_HELLO_WORD(val) // 这里相当于修改vuex变量的值 this.$tore.commit('SET_HELLO_WORD', val)
+      console.log(this.helloWord)
+    }
+  }
+</script>
+```
+
 
