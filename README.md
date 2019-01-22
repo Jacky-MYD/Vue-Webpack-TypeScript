@@ -275,7 +275,7 @@ const api = {
 }
 export default api
 ```
-
+vuex的使用可以上项目的案例
 
 
 
