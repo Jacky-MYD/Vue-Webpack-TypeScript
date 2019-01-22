@@ -192,5 +192,91 @@ declare module "*.vue" {
   }
 </script>
 ```
+## 配置vuex
+先安装依赖npm i vuex vuex-class --save，然后我们逐个文件的配置，需要注意的是我们项目中除了配置文件外，将原来所以js文件改成ts文件
+### index.ts(modules)
+```js
+import actions from './actions.ts'
+import { state, mutations } from './mutations.ts'
+import getters from './getters.ts'
+const store = {
+  state,
+  getters,
+  actions,
+  mutations
+}
+export default store
+```
+### action.ts
+```js
+import ajax from '../../ajax.ts'
+import { Demo } from './type'
+import Api from './api.ts'
+import { Commit, Action, ActionTree } from 'vuex'
+
+const stateVal: Action<Demo, any> = (context: { commit: Commit }, data: any) => {
+  context.commit('SET_HELLO_WORD', data)
+}
+const actions: ActionTree<Demo, any> = {
+  stateVal
+}
+export default actions
+```
+### getters.ts
+```js
+import { Demo } from './type'
+import { GetterTree } from 'vuex'
+
+const getters: GetterTree<Demo, any> = {
+  helloWord: (state: Demo) => state.helloWord
+}
+
+export default getters
+```
+### mutations.ts
+```js
+import { Demo } from './type'
+import { MutationTree } from 'vuex'
+
+const state: Demo = {
+  helloWord: 'helloWord'
+}
+const mutations: MutationTree<Demo> = {
+  SET_HELLO_WORD (state: Demo, data: string) {
+    state.helloWord = data
+  }
+}
+
+export { state, mutations }
+```
+### type.ts
+```js
+export interface Demo {
+    helloWord: string;
+}
+```
+#### dispatches.ts
+```js
+import api from './api.ts'
+import ajax from '../../ajax.ts'
+
+export const postDemo = (params) => {
+  return ajax.post(api.postDemo, params)
+}
+export const getDemo = (params) => {
+  return ajax.get(api.getDemo + params)
+}
+```
+### api.ts(接口名配置文件)
+```
+const api = {
+  postDemo: 's?wd=demo',
+  getDemo: 's?wd='
+}
+export default api
+```
+
+
+
 
 
